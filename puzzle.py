@@ -1,5 +1,3 @@
-#from Knights.logic import And, Or
-#from Knights.logic import And
 from logic import *
 
 AKnight = Symbol("A is a Knight")
@@ -13,37 +11,60 @@ CKnave = Symbol("C is a Knave")
 
 # Puzzle 0
 # A says "I am both a knight and a knave."
-knowledge0 = And(Or(And(AKnight, AKnave), And(AKnave, AKnave))
+
+sentenceA = And(AKnight, AKnave)
+
+knowledge0 = And(Or(AKnight,AKnave),Not(And(AKnight,AKnave)),
+
+             Implication(AKnight,sentenceA),
+             Implication(AKnave,Not(sentenceA))
+
+
     # TODO
 )
 
 # Puzzle 1
 # A says "We are both knaves."
 # B says nothing.
-knowledge1 = And(Or(And(AKnave, BKnave), And(AKnave, BKnight))
+
+sentenceA = And(AKnave,BKnave)
+
+knowledge1 = And(Or(AKnight,AKnave),Not(And(AKnight,AKnave)),
+                 Or(BKnight,BKnave),Not(And(BKnight,BKnave)),
+
+                 Implication(AKnight,sentenceA),
+                 Implication(AKnave,Not(sentenceA))
     # TODO
 )
 
 # Puzzle 2
 # A says "We are the same kind."
-# B says "We are of different kinds."
-knowledge2 = And(Or(And(AKnight,BKnight),And(AKnave,BKnave)),
-                 Or(And(BKnight,AKnave),And(BKnave,AKnight)))
+# B says "We are of different kinds."))
+
+sentenceA = Or(And(AKnave,BKnave),And(AKnight,BKnight))
+sentenceB = Or(And(AKnight,BKnave),And(AKnave,BKnight))
+
+knowledge2 = And(Or(AKnight,AKnave),Not(And(AKnight,AKnave)),
+                 Or(BKnight,BKnave),Not(And(BKnight,BKnave)),
+                 Biconditional(AKnight,sentenceA),
+                 Biconditional(BKnight,sentenceB)
+ 
     # TODO
 
+)
 
 # Puzzle 3
 # A says either "I am a knight." or "I am a knave.", but you don't know which.
 # B says "A said 'I am a knave'."
 # B says "C is a knave."
 # C says "A is a knight."
-#knowledge3 = And(Or(And(AKnight,AKnight), And(AKnave,AKnave), And(AKnight, AKnave), And(AKnave,AKnight)),
-knowledge3 = And(Or(And(AKnight,AKnave),And(AKnight, AKnight)), 
-             Or(And(BKnave, AKnave)),
-             #Or(And(BKnight,OR(AKnight,AKnave), Or(AKnave, AKnave)),(BKnave,  OR(AKnight,AKnave)), Or(AKnave, AKnave)), 
 
-             Or(And(BKnave,CKnave)),
-             Or(And(CKnight,AKnight), And(CKnave, AKnave)))
+knowledge3 = And(Or(AKnight,AKnave),
+             And(Not(And(BKnight,AKnave)),
+             Or(And(BKnight,CKnave),BKnave)),
+             And(And(CKnight,AKnight),Not(And(CKnave,AKnight)))
+    # TODO
+)
 
 
 def main():
